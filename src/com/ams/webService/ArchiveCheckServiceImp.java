@@ -71,8 +71,7 @@ public class ArchiveCheckServiceImp {
 		
 		if(archive==null){
 			return xmlReturn("0","解析数据xml中无SYSTEM节点");
-		}
-		
+		}		
 		try{
 			//获取xml档案数据
 			Map<String, Object> xmlFileRow =namedNodeToMap(archive);
