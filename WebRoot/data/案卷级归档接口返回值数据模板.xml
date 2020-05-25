@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DOC>
+	<!-- TYPE="0" ：执行中出现错误; TYPE=1:执行成功：成功的数量统计 -->
+	<INFO TYPE="0" >错误信息描述：传入的xml字符有误; 执行中出现未知错误 </INFO>
+<!--	<INFO TYPE="1" > 本次XML文件中解析出1条案卷数据，10条文件数据，成功归档。</INFO> -->
+	<FILES>
+		<!-- ID:条目主键;  STATUS0:归档失败，附失败信息；1:成功。ERRORMSG为空-->
+		<VOL ID="" STATUS="0">
+				<!-- 案卷校验出现了错误,示例出错内容-->
+				<ERRORMSG > 
+					<COLUMN NAME="PRJCODE" VALUE="1">字符型长度超过最大长度</COLUMN>
+					<COLUMN NAME="TIME" VALUE="11">日期格式不规范</COLUMN>
+					<COLUMN NAME="LSH" VALUE="3">整型校验出错</COLUMN>
+					<COLUMN NAME="FILENAME" VALUE="4">文件名不能为空</COLUMN>
+				</ERRORMSG>
+			<!-- 案卷内校验出错文件信息，只列出校验出错的文件信息如，案卷下有10条文件，3条未通过校验，列出3条校验失败信息-->
+			<FILE ID="" STATUS="0">
+					<!-- 文件字段校验出现了错误,示例出错内容-->
+					<ERRORMSG > 
+						<COLUMN NAME="PRJCODE" VALUE="1">字符型长度超过最大长度</COLUMN>
+						<COLUMN NAME="TIME" VALUE="11">日期格式不规范</COLUMN>
+						<COLUMN NAME="LSH" VALUE="3">整型校验出错</COLUMN>
+						<COLUMN NAME="FILEPATH" VALUE="2">文件在远程服务器上不存在</COLUMN>
+						<COLUMN NAME="FILENAME" VALUE="4">文件名不能为空</COLUMN>
+					</ERRORMSG>
+			</FILE>
+			<!--一个卷内可包含多个文件-->
+		</VOL>
+	</FILES>
+</DOC>

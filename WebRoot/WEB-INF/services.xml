@@ -1,0 +1,52 @@
+<serviceGroup>
+	<!-- 理正归档接口 begin-->
+	<!-- 接口名称：http://ip:port/ams/services/SyncData?wsdl-->
+	<service name="SyncData">
+		<parameter name="ServiceObjectSupplier">
+			org.apache.axis2.extensions.spring.receivers.SpringAppContextAwareObjectSupplier
+		</parameter>
+		<!-- 接口实现类-->
+		<parameter name="SpringBeanName">dataSynchroId</parameter>
+<!-- 		<parameter name="ServiceClass">com.ams.webService.SyncDataImp1</parameter> -->
+		<!-- 接口方法名(案卷归档)-->
+		<operation name="arcSrv_LZVolume">
+			<messageReceivers>
+				<messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
+					class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+				<messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only"
+					class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver" />
+			</messageReceivers>
+		</operation>
+		<!-- 接口方法名(文件归档)-->
+		<operation name="arcSrv_LZFile">
+			<messageReceivers>
+				<messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
+					class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+				<messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only"
+					class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver" />
+			</messageReceivers>
+		</operation>
+	</service>
+	<!-- 理正归档接口 end-->
+	
+	<!-- 档案查重接口 begin-->
+	<!-- 接口名称：http://ip:port/ams/services/ArchiveCheck?wsdl-->
+	<service name="ArchiveCheck">
+		<parameter name="ServiceObjectSupplier">
+			org.apache.axis2.extensions.spring.receivers.SpringAppContextAwareObjectSupplier
+		</parameter>
+		<!-- 接口实现类-->
+		<parameter name="SpringBeanName">archiveCheckServiceId</parameter>
+<!-- 		<parameter name="ServiceClass">com.ams.webService.SyncDataImp1</parameter> -->
+		<!-- 接口方法名-->
+		<operation name="archiveCheckService">
+			<messageReceivers>
+				<messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
+					class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+				<messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only"
+					class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver" />
+			</messageReceivers>
+		</operation>
+	</service>
+	<!-- 档案查重接口 end-->
+</serviceGroup>  

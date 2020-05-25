@@ -1,0 +1,63 @@
+CREATE TABLE D_GLGX_GD
+(
+  SYSCODE VARCHAR(32) PRIMARY KEY,
+  WJID    VARCHAR(32),
+  GLID    VARCHAR(32),
+  AJID    VARCHAR(32),
+  UNITSYS VARCHAR(10),
+  LIBCODE VARCHAR(10)
+);
+
+CREATE TABLE D_NEWSYS(	
+	SYSCODE VARCHAR(64), 
+	OLDSYS VARCHAR(64), 
+	LIBCODE VARCHAR(2), 
+	UNITSYS VARCHAR(4), 
+	ARCLVL VARCHAR(8),
+	NOWTIME  VARCHAR(32)
+);
+CREATE TABLE D_WEBSERDATA(
+  XMLID   VARCHAR(32) not null,
+  XMLDATA TEXT,
+  TIME    VARCHAR(32),
+  LOG     TEXT
+);
+
+-- 电子文件表添加字段
+alter table e_record add LastModifyTime varchar(30) COMMENT '最后修改时间';
+alter table e_record add SourceID varchar(100) COMMENT '文件来源ID';
+alter table e_record add signaturerules varchar(200) COMMENT '签名规则';
+alter table e_record add signaturetime varchar(200) COMMENT '签名时间';
+alter table e_record add signer varchar(200) COMMENT '签名人';
+alter table e_record add signature varchar(4000) COMMENT '签名结果';
+alter table e_record add certificate varchar(1000) COMMENT '证书';
+alter table e_record add certificatereference varchar(200) COMMENT '证书引证';
+alter table e_record add signalgorithmidenty varchar(200) COMMENT '签名算法标识';
+
+-- 接口日志表id（主键）、sysID、serviceID、Archid(业务系统id)、Title(题名)、class(类别:案卷或件）、FilingDate(归档时间)、归档状态（成功、失败）、归档信息、备注等。
+
+create table d_log (
+id varchar(32) primary key  COMMENT '主键',
+sysid varchar(100)  COMMENT '业务系统唯一标识',
+serviceid varchar(100)  COMMENT '业务数据归档的唯一服务标识,接口标识（如卷接口/件接口）',
+archid varchar(100)  COMMENT '业务系统id,归档数据的唯一标识',
+title varchar(500)  COMMENT '题名',
+class varchar(20)  COMMENT '类别:案卷或件',
+filingdate varchar(20)  COMMENT '归档时间',
+status varchar(20)  COMMENT '归档状态（成功、失败）',
+data LONGTEXT  COMMENT '归档信息',
+remark varchar(1000)  COMMENT '备注'
+);
+
+-- 重配置表（字段有sysID、serviceID、srcTable）
+create table d_check (
+id varchar(32) primary key  COMMENT '主键',
+sysid varchar(100)  COMMENT '业务系统唯一标识',
+serviceid varchar(100)  COMMENT '业务数据归档的唯一服务标识,接口标识（如卷接口/件接口）',
+srctable varchar(20)  COMMENT '业务系统归档数据对应的档案系统数据表名',
+srcfield varchar(20)  COMMENT '档案系统数据表中记录业务系统归档数据原ID的字段名称',
+unitsys varchar(10)  COMMENT '全宗号',
+remark varchar(200)  COMMENT '备注'
+);
+insert into d_check (id,sysid,serviceid,srctable,srcfield,unitsys,remark) values ('81554E918CAACE2D4825766A0010F5E3','DesProject','LZVolume','f1_4_volume','did','0001','理正系统:归档案卷-档案系统:勘测设计项目档案-案卷');
+insert into d_check (id,sysid,serviceid,srctable,srcfield,unitsys,remark) values ('0F852D8D66BAF9C24825766A002B5BC1','DesProject','LZFile','f1_4_document','did','0001','理正系统:归档文件-档案系统:勘测设计项目档案-散文件');

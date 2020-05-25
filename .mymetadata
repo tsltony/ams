@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="ams"
+  id="myeclipse.1504602226176"
+  context-root="/ams"
+  j2ee-spec="5.0"
+  archive="ams.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

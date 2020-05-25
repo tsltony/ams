@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DOC>
+	<!-- TYPE="0" ：有执行错误; TYPE=1:执行成功 -->
+	<INFO TYPE="0" >本次XML文件中解析出4条文件数据，失败2；成功2. </INFO>
+	<FILES>
+		<!-- ID:条目主键;  STATUS0:归档失败，附失败信息；1:成功。ERRORMSG为空-->
+		<FILE ID="1111111" STATUS="0">
+				<!-- 文件字段校验出现了错误,示例出错内容-->
+				<ERRORMSG > 
+					<COLUMN NAME="ID" VALUE="">文件ID不能为空</COLUMN>
+				</ERRORMSG>
+		</FILE>
+		<FILE ID="2222222" STATUS="1"></FILE>
+		<FILE ID="3333333" STATUS="0">
+				<!-- 文件字段校验出现了错误,示例出错内容-->
+				<ERRORMSG > 
+					<COLUMN NAME="ID" VALUE="">文件ID不能为空</COLUMN>
+				</ERRORMSG>
+		</FILE>
+		<FILE ID="444444444" STATUS="1"></FILE>
+	</FILES>
+</DOC>

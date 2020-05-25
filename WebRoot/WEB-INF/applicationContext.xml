@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	
+	<bean id="applicationContext" class="org.apache.axis2.extensions.spring.receivers.ApplicationContextHolder" />
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="amsDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${db.ams.driver}"></property>
+		<property name="url" value="${db.ams.url}"></property>
+		<property name="username" value="${db.ams.username}"></property>
+		<property name="password" value="${db.ams.password}"></property>
+	</bean>
+	
+
+	<bean id="amsJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="amsDataSource"></property>
+	</bean>
+	
+
+	<bean id="syncDataDaoId" class= "com.ams.dao.syncDataDao" init-method="init">
+		<property name="amsJdbcTemplate" ref="amsJdbcTemplate"/>
+	</bean>
+	<bean id="dataSynchroId" class= "com.ams.webService.SyncDataImp1" >
+		<property name="syncDao" ref="syncDataDaoId"/>
+	</bean>
+	<bean id="archiveCheckServiceId" class= "com.ams.webService.ArchiveCheckServiceImp" >
+		<property name="syncDao" ref="syncDataDaoId"/>
+	</bean>
+	
+<!--  配置事务 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="amsDataSource"/>
+	</bean>
+	<!--  配置事务传播特性 -->
+	<tx:advice id="ImpAdvice" transaction-manager="transactionManager">
+	    <tx:attributes>
+	     <tx:method name="importVolData" propagation="REQUIRED"/>
+	      <tx:method name="importFileData" propagation="REQUIRED"/>
+	    </tx:attributes>
+	</tx:advice>
+	<!--  配置参与事务的类 -->
+	<aop:config>
+		<aop:pointcut id="ImpServiceMethod" expression="execution(* com.ams.dao.syncDataDao.*(..))"/>
+		<aop:advisor pointcut-ref="ImpServiceMethod" advice-ref="ImpAdvice" />
+	</aop:config>
+	
+	
+</beans>
